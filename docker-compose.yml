@@ -1,0 +1,7 @@
+version: "3"
+services:
+  banking-api-proxy:
+    build:
+      context: .
+    ports:
+     - "8080:8080"
