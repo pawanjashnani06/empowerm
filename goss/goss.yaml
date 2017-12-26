@@ -1,0 +1,8 @@
+process:
+  node:
+    running: true
+port:
+  tcp6:8080:
+    listening: true
+    ip:
+    - '::'
