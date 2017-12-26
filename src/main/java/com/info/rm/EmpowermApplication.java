@@ -13,14 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @SpringBootApplication
 @RestController
-public final class EmpowermApplication {
-
-    /**
-     * Default constructor.
-     */
-    private EmpowermApplication() {
-        //Impementation has to be provided.
-    }
+public class EmpowermApplication {
 
     /**
      * Main method.

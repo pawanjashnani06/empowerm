@@ -1,3 +1,22 @@
 machine:
   services:
     - docker
+
+dependencies:
+  override:
+    - npm install
+    - mvn install
+    - docker info
+    - docker build --rm=false -t empowerm .
+    - curl -fsSL https://goss.rocks/install | GOSS_DST=./goss sh
+
+test:
+  post:
+    - docker run -d -p 8080:8080 -v ${PWD}/goss:/goss --name gossed-container empowerm; sleep 10
+    - CID=$(docker inspect --format "{{.Id}}" gossed-container) && sudo lxc-attach -n ${CID} -f /var/lib/docker/containers/${CID}/config.lxc -- sh -c '/goss/goss -g /goss/goss.yaml validate'
+
+deployment:
+  dev:
+    branch: master
+    commands:
+      - ./deploy.sh
