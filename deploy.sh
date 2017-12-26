@@ -9,7 +9,7 @@ CLUSTER="empowerm"
 SERVICES="empowerm"
 REGION="ap-south-1"
 CONTAINER_NAME="empowerm"
-AWS_ACCOUNT_ID="365228081331"
+AWS_ACCOUNT_ID="223414129485"
 
 configure_aws_cli(){
 	aws --version
