@@ -5,11 +5,14 @@ package com.info.rm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Application class.
  */
 @SpringBootApplication
+@RestController
 public final class EmpowermApplication {
 
     /**
@@ -26,5 +29,10 @@ public final class EmpowermApplication {
      */
     public static void main(final String[] args) {
         SpringApplication.run(EmpowermApplication.class, args);
+    }
+	
+	@RequestMapping("/")
+    public String home() {
+        return "test base application...!!!";
     }
 }
