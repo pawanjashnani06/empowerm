@@ -17,4 +17,4 @@ deployment:
   dev:
     branch: master
     commands:
-      - ./deploy.sh
+      - sh ./deploy.sh
