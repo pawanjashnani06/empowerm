@@ -27,7 +27,7 @@ make_task_def(){
 	task_template='[
 		{
 			"name": "empowerm",
-			"image": "'${AWS_ACCOUNT_ID}'.dkr.ecr.'${REGION}'.amazonaws.com/empowerm:'${CIRCLE_SHA1}'",
+			"image": "'${AWS_ACCOUNT_ID}'.dkr.ecr.'${REGION}'.amazonaws.com/empowerm:latest",
 			"essential": true,
 			"memory": 500,
 			"cpu": 10,
@@ -41,7 +41,7 @@ make_task_def(){
 		}
 	]'
   echo $task_template
-	task_def=$(printf "$task_template" $AWS_ACCOUNT_ID $CIRCLE_SHA1)
+	task_def=$(printf "$task_template" $AWS_ACCOUNT_ID latest)
 }
 
 register_definition() {
@@ -56,8 +56,8 @@ register_definition() {
 }
 push_ecr_image(){
 	eval $(aws ecr get-login --region ${REGION})
-	docker tag empowerm $AWS_ACCOUNT_ID.dkr.ecr.${REGION}.amazonaws.com/${CONTAINER_NAME}:$CIRCLE_SHA1
-	docker push $AWS_ACCOUNT_ID.dkr.ecr.${REGION}.amazonaws.com/${CONTAINER_NAME}:$CIRCLE_SHA1
+	docker tag empowerm $AWS_ACCOUNT_ID.dkr.ecr.${REGION}.amazonaws.com/${CONTAINER_NAME}:latest
+	docker push $AWS_ACCOUNT_ID.dkr.ecr.${REGION}.amazonaws.com/${CONTAINER_NAME}:latest
 }
 
 configure_aws_cli
