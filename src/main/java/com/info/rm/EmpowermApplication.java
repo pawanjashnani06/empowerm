@@ -26,6 +26,6 @@ public class EmpowermApplication {
 	
 	@RequestMapping("/")
     public String home() {
-        return "test base application...!!!";
+        return "test base application updated...!!!";
     }
 }
