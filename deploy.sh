@@ -20,28 +20,7 @@ configure_aws_cli(){
 deploy_cluster() {
     make_task_def
     register_definition
-		# aws ecs update-service --cluster empowerm --service empowerm --task-definition ${FAMILY}:${task_revision} --desired-count 2 > /dev/null
-		if [[ $(aws ecs update-service --cluster ${CLUSTER} --service ${SERVICES} --task-definition ${FAMILY}:${task_revision} | \
-								 $JQ '.service.taskDefinition') != $revision ]]; then
-			echo "Error updating service."
-			return 1
-	fi
 
-	# wait for older revisions to disappear
-	# not really necessary, but nice for demos
-	for attempt in {1..30}; do
-			if stale=$(aws ecs describe-services --cluster ${CLUSTER} --service ${SERVICES} | \
-										 $JQ ".services[0].deployments | .[] | select(.taskDefinition != \"$revision\") | .taskDefinition"); then
-					echo "Waiting for stale deployments:"
-					echo "$stale"
-					sleep 5
-			else
-					echo "Deployed!"
-					return 0
-			fi
-	done
-	echo "Service update took too long."
-	return 1
 }
 
 make_task_def(){
