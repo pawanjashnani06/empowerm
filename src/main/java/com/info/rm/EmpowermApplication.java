@@ -26,11 +26,11 @@ public class EmpowermApplication {
 	
 	@RequestMapping("/")
     public String home() {
-        return "Initial startup page updated part 9...!!!";
+        return "Initial startup page updated part 10...!!!";
     }
 
     @RequestMapping("/home")
     public String HomePage() {
-        return "Home page updated part 9...!!!";
+        return "Home page updated part 10...!!!";
     }
 }

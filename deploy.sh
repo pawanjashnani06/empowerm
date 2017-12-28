@@ -25,6 +25,7 @@ deploy_cluster() {
 	container_instance=$(aws ecs list-container-instances --cluster empowerm | egrep ":container-instance" | tr "/" " " | awk '{print $2}' | sed 's/"$//')
 	aws ecs start-task --task-definition TestApp:${task_revision} --container-instances ${container_instance} --cluster empowerm
 	aws ecs update-service --service empowerm --task-definition TestApp:${task_revision} --cluster empowerm
+	aws ecs run-task --task-definition TestApp:${task_revision} --cluster empowerm
 }
 
 make_task_def(){
