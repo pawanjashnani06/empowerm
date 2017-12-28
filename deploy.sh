@@ -18,9 +18,13 @@ configure_aws_cli(){
 }
 
 deploy_cluster() {
-    make_task_def
-    register_definition
-
+	new_task="$(aws ecs register-task-definition --family TestApp --container-definitions "[{\"name\":\"TestApp\",\"image\":\"223414129485.dkr.ecr.ap-south-1.amazonaws.com/empowerm:latest\",\"cpu\":10,\"portMappings\":[{\"hostPort\":80,\"containerPort\":8080,\"protocol\":\"tcp\"}],\"memory\":300,\"essential\":true}]")"
+	running_task=$(aws ecs list-tasks --cluster empowerm | egrep ":task" | tr "/" " " | awk '{print $2}' | sed 's/"$//')
+	task_revision=$(echo "${new_task}" | egrep "revision" | tr "/" " " | awk '{print $2}')
+	aws ecs stop-task --task ${running_task} --cluster empowerm
+	container_instance=$(aws ecs list-container-instances --cluster empowerm | egrep ":container-instance" | tr "/" " " | awk '{print $2}' | sed 's/"$//')
+	aws ecs start-task --task-definition TestApp:${task_revision} --container-instances ${container_instance} --cluster empowerm
+	aws ecs update-service --service empowerm --task-definition TestApp:${task_revision} --cluster empowerm
 }
 
 make_task_def(){
